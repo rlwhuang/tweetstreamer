@@ -1,0 +1,19 @@
+{
+  "name": "tweetstreamer",
+  "version": "1.0.0",
+  "description": "IMA collective methods",
+  "main": "twitter-streaming.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "node-twitter": "^0.5.3",
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "node twitter-streaming.js"
+  },
+  "author": "Richard Lewei Huang",
+  "license": "ISC", 
+  "main":"twitter-streaming.js"
+}
