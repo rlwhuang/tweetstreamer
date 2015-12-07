@@ -3,7 +3,10 @@ var Twitter = require('node-twitter');
 var http = require("http");
 var httpserver = http.createServer(app);
 var io = require('socket.io').listen(httpserver);
- 
+
+var port = Number(process.env.PORT || 8080);
+
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
@@ -15,7 +18,7 @@ io.on('connection', function(socket){
   });
 });
 
-httpserver.listen(8080, function(){
+httpserver.listen(port, function(){
   console.log('listening on *:8080');
 });
  
