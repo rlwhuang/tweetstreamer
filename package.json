@@ -15,5 +15,5 @@
   },
   "author": "Richard Lewei Huang",
   "license": "ISC", 
-  "main":"twitter-streaming.js"
+  "main":"server.js"
 }

@@ -7,24 +7,76 @@
 </head>
 <script src="/socket.io/socket.io.js"></script>
 <script src="//povdocs.github.io/webvr-starter-kit/build/vr.js"></script>
+<script src="clocks.js"></script>
+<script>
+var fonts = ['"Courier New"', '"Times New Roman"', '"Tahoma"', '"Arial"', '"Verdana"'];
+var styles = ['bold', 'italic'];
+var moveToArray = [];
+    
+function getRamdomElement(array){
+    return Math.floor(Math.random()*array.length);
+}
 
+function getRandomInteger(){
+    var negativity = Math.random() < 0.5 ? -1 : 1;
+    var number = Math.floor((Math.random() * 5) + 1);
+    return number*negativity;
+}
+    
+function moveRandomTo(){
+    moveToArray[0] = (Math.random() < 0.5 ? -1 : 1) * (Math.floor((Math.random() * 6)+1));
+    moveToArray[1] = (Math.random() < 0.5 ? -1 : 1) * (Math.floor((Math.random() * 6)+1));
+    moveToArray[2] = (Math.random() < 0.5 ? -1 : 1) * (Math.floor((Math.random() * 6)+1));
+    console.log(moveToArray);
+}
 
+function makeVRText(msg, rotx, roty, rotz){
+    if (moveToArray[0] > 0 && moveToArray[2] < 0) {
+        VR.text({
+            text: msg,
+            font: styles[0] + ' 30pt ' + fonts[0] //courier
+        }).moveTo(moveToArray[0]-3, moveToArray[1], moveToArray[2]+7).rotateX(rotx).rotateY(roty).rotateZ(rotz);
+    } else if (moveToArray[0] >= 0 && moveToArray[2] >= 0 ) {
+        VR.text({
+            text: msg,
+            font: styles[0] + ' 30pt ' + fonts[1] //times
+        }).moveTo(moveToArray[0], moveToArray[1], moveToArray[2]).rotateX(rotx).rotateY(roty).rotateZ(rotz);
+    } else if (moveToArray[0] < 0 && moveToArray[2] > 0 ) {
+        VR.text({
+            text: msg,
+            font: styles[0] + ' 30pt ' + fonts[2] //tahoma
+        }).moveTo(moveToArray[0], moveToArray[1], moveToArray[2]).rotateX(rotx).rotateY(roty).rotateZ(rotz);
+    } else {
+        VR.text({
+            text: msg,
+            font: styles[0] + ' 30pt ' + fonts[3] //arial
+        }).moveTo(moveToArray[0]+3, moveToArray[1], moveToArray[2]).rotateX(rotx).rotateY(roty).rotateZ(rotz);
+    }
+}
+</script>
 
 <script>
-    VR.floor();
-    var container = VR.empty()
+    //VR.floor();
+    VR.body.moveZ(-2);
+ /*   var container = VR.empty()
         .moveTo(2, 3, 1)
-        .rotateY(-Math.PI / 6);
-    
-    
+        .rotateY(-Math.PI / 6);*/
     var socket = io();
     socket.on('incoming tweet', function(msg) {
         //$('#container').append($('<li>').text(msg));
-        container.text({
-                text: msg,
-                font: 'bold 30pt "Courier New"'
-            }).moveY(Math.random()).moveX(Math.random());
+        moveRandomTo();
+        if (moveToArray[0] >= 0 && moveToArray[2] >= 0 ){
+            makeVRText(msg, 0, -1.57, 0);
+        } else if (moveToArray[0] < 0 && moveToArray[2] > 0 ) {
+            makeVRText(msg, 0, 1.57, 0);
+        } else if (moveToArray[0] > 0 && moveToArray[2] < 0 ) {
+            makeVRText(msg, 0, 3.14, 0);
+        } else if (moveToArray[0] < 0 && moveToArray[2] < 0 ) {
+            makeVRText(msg, 0, 0, 0);
+        }
+
     });
+        
 </script>
     
 <body>

@@ -20,8 +20,6 @@ httpserver.listen(8080, function(){
 });
  
 
-
-
 var twitterStreamClient = new Twitter.StreamClient(
     'YdTcFc9eCTmxaH9sPexhnIEe2',
     'cslO5Krv82Wmbzq7hkRi5ZjVyVBPaEPtKfxCYEVGp2vtFk7AaR',
@@ -43,4 +41,4 @@ twitterStreamClient.on('tweet', function(tweet) {
     io.emit('incoming tweet', tweet.text);
 });
 
-twitterStreamClient.start(['#MacriPresidente', 'scioli', 'macri', 'balotage']);
+twitterStreamClient.start(['#MacriPresidente', 'macri', 'presidente', 'kirchner']);
